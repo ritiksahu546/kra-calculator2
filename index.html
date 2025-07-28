@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KRA Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      padding: 30px;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .red {
+      color: #dc3545;
+    }
+    .yellow {
+      color: #ffc107;
+    }
+    .green {
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>KRA Calculator</h2>
+    <input type="number" id="effcc" placeholder="Enter Eff CC (e.g. 48)" />
+    <input type="number" id="tt" placeholder="Enter Talk Time in Minutes (e.g. 125)" />
+    <button onclick="calculateKRA()">Calculate KRA</button>
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateKRA() {
+      const effcc = parseFloat(document.getElementById("effcc").value);
+      const totalMinutes = parseFloat(document.getElementById("tt").value);
+      const output = document.getElementById("output");
+
+      if (isNaN(effcc) || isNaN(totalMinutes)) {
+        output.innerHTML = "Please enter valid inputs.";
+        output.className = "result red";
+        return;
+      }
+
+      const kraEffCC = effcc / 48;
+      const kraTT = totalMinutes / 240;
+      let kra = (kraEffCC + kraTT) * 50;
+
+      let colorClass = "green";
+      if (kra < 100) colorClass = "red";
+      else if (kra === 100) colorClass = "yellow";
+
+      output.innerHTML = `KRA: ${kra.toFixed(2)}%`;
+      output.className = `result ${colorClass}`;
+    }
+  </script>
+</body>
+</html>
